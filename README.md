@@ -1,71 +1,105 @@
-#  Java Sets
+# Java Sets ve Collections Projesi
+
+Bu proje, Java'da `Set` koleksiyonlarının özelliklerini ve temel set operasyonlarını (Union, Intersection, Difference) kullanarak karmaşık veri yönetimi senaryolarını çözmeyi hedeflemektedir. Ayrıca, metin işleme ve benzersiz kelime bulma gibi yaygın bir görevi de içermektedir.
+
+---
+
+## Proje Hedefleri
+
+Proje, iki ana meydan okumadan oluşmaktadır:
+
+### 1. Set Challenge (Görev Yönetimi)
+
+Şirket içi görev yönetimini simüle eden bir senaryo üzerinden, Set yapılarını kullanarak çalışanların (Ann, Bob, Carol) görevlerini yönetmek ve müdür raporları hazırlamak.
+
+* **Task Eşsizliği:** Bir `Task`'ın eşsizliği, `project` ve `description` alanlarının birleşimi ile belirlenir (`equals()` ve `hashCode()` override edildi).
+* **Set Operasyonları:** `TaskData` sınıfı altında görev Set'leri üzerinde **Birleşim (Union)**, **Kesişim (Intersection)** ve **Fark (Difference)** işlemleri gerçekleştirilmiştir.
+
+### 2. String Challenge (Benzersiz Kelime Bulma)
+
+Verilen bir metin bloğu içindeki noktalama işaretlerini temizleyerek, metindeki **benzersiz (unique)** kelimeleri bulmak ve bunları alfabetik olarak sıralamak.
+
+---
+
+## Kurulum ve Çalıştırma
+
+Bu projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları izleyin.
+
+### Önkoşullar
+
+* **Java Geliştirme Kiti (JDK):** Java 17 veya üzeri
+* **IDE:** IntelliJ IDEA önerilir.
+* **Git:** Projeyi klonlamak için
 
 ### Proje Kurulumu
 
-Projeyi öncelikle forklayın ve clone edin.
-Daha sonra projeyi IntellijIDEA kullanarak açınız. README.md dosyasını dikkatli bir şekilde okuyarak istenenleri yapmaya çalışın.
-Proje sayımız ilerledikçe proje yönetimimizi kolaylaştırmak adına projelerimizi belli klasör kalıplarında saklamak işimizi kolaylaştırmak adına iyi bir alışkanlıktır.
-Örnek bir Lokasyon: Workintech/Sprint_1/Etud.
+1.  **Projeyi Çatallayın (Fork) ve Klonlayın:**
+    ```bash
+    git clone [PROJE_GITHUB_URL]
+    ```
 
-### Hedeflerimiz:
+2.  **Projeyi Açın:**
+    IntelliJ IDEA'yı açın ve klonladığınız proje dizinini (genellikle `pom.xml` dosyasının bulunduğu ana dizin) **Import Project** veya **Open** seçeneği ile açın.
 
-### 1-)Set Challenge
+3.  **Paket Yapısı:**
+    Projeniz aşağıdaki gibi bir yapıya sahip olmalıdır:
 
- * org.example.entity paketi altında İki tane sınıfımız olucak. ```Task``` ve ```TaskData```
- * ```Task``` sınıfı içerisinde 5 tane ```instance variable``` olmalı. ```project``` => string ```description``` => string ```assignee``` => string
- * ```priority``` org.example.entity paketi altında Priority şeklinde bir Enum tipinde olmalı. Priority{HIGH, MED, LOW} şeklinde oluşturabilirsiniz.
- * ```status``` org.example.entity paketi altında Status şeklinde bir Enum tipinde olmalı. Status{IN_QUEUE, ASSIGNED, IN_PROGRESS} şeklinde oluşturabilirsiniz.
- * Task'ın eşsizliğini ```project``` ve ```description``` değerleri birlikte belirler.
- * TaskData sınıfı 4 tane değişkene sahip olmalı  ```annsTasks => Set<Task>```   ```bobsTasks => Set<Task>```  ```carolsTasks => Set<Task>``` ```unassignedTasks => Set<Task>``` Bu 4 değerde constructor vasıtasıyla set edilebilmeli.
- * TaskData sınıfı ```getTasks()``` adlı bir metoda sahip olmalı. method parametre olarak bir String almalı. Bu 4 değerden herhangi birini alabilir. ("ann", "bob", "carol", "all") Metodun dönüş değeri ```Set<Task>``` olmalı.
- 
-### Senaryo
+    ```
+    src/main/java/
+    └── org/example/entity/
+        ├── Task.java
+        ├── TaskData.java
+        ├── Priority.java (Enum)
+        ├── Status.java (Enum)
+        └── StringSet.java
+    ```
 
-* Şöyle bir senaryomuz var. Sen şirketteki yeni bir yöneticisin ve ekibinde 3 tane çalışanın var.
-* Ann, Bob, Carol 3'ü de senin çalışanların.
-* Üç yazılımcı da farklı task sahipleri.
-* Siz bütün yazılımcılara ellerindeki taskları yollamalarını istediniz.
-* Bunlar bir ```set``` içerisinde tutulabilir. Sende bu taskları kendi müdürüne raporluyorsun.
+4.  **Testleri Çalıştırma:**
+    Projenin doğru çalıştığını kontrol etmek için `src/test/java/MainTest.java` dosyasındaki JUnit testlerini çalıştırabilirsiniz.
 
- Müdürüne şu soruların cevabını verebilmelisin:
-* Tüm çalışanlarının üzerindeki tasklar nelerdir ?
-* Her bir çalışanın üzerindeki tasklar nelerdir ?
-* Herhangi bir çalışana atanması yapılmamış olan tasklar nelerdir ?
-* Birden fazla çalışana atanmış task var mı ? Varsa bunlar hangileri ?
+---
 
-* Bu görevleri yapabilmek TaskData sınıfı altında aşağıdaki metodları içerisinde aşağıdaki metodları yazmalısın,
-* ```getUnion()``` metodu bir set listesi alır ve aldığı tüm set değerlerini union ile birleştirip döner.
-* ```getIntersect()``` metodu iki tane set alır ve aralarındaki kesişim kümesini bulup döner.
-* ```getDifference()``` metodu iki tane set alır ve ikinci set içerisindeki verileri ilk set içerisindeki verilerden çıkarır.
+## Kullanılan Sınıflar ve Metotlar
 
-### 2-) Challenge
+### `org.example.entity.TaskData`
 
-* Elimizde aşağıdaki gibi bir text mevcut.
-* org.example.entity paketi altında StringSet adında bir sınıf tanımlayın.
-* StringSet sınıfı içerisinde ```findUniqueWords()``` adında static bir method tanımlayınız.
-* İçerisinde aşağıdaki işlemleri yapmalasınız.
-* "Carroll began writing the manuscript of the story the next day, although that earliest version is lost. " +
-                "The girls and Carroll took another boat trip a month later, when he elaborated the plot to the story of Alice, " +
-                "and in November he began working on the manuscript in earnest. To add the finishing touches he researched " +
-                "natural history in connection with the animals presented in the book and then had the book examined " +
-                "by other children—particularly those of George MacDonald. Though Carroll did add his own illustrations " +
-                "to the original copy, on publication he was advised to find a professional illustrator so the pictures " +
-                "were more appealing to its audiences. He subsequently approached John Tenniel to reinterpret " +
-                "Carroll's visions through his own artistic eye, telling him that the story had been well liked by the" +
-                " children.\n" +
-                "\n" +
-                "Carroll began planning a print edition of the Alice story in 1863. " +
-                "He wrote on 9 May 1863 that MacDonald's family had suggested he publish Alice." +
-                " A diary entry for 2 July says that he received a specimen page of the print edition around that date. " +
-                "On 26 November 1864, Carroll gave Alice the manuscript of Alice's Adventures Under Ground, with illustrations " +
-                "by Carroll, dedicating it as a Christmas Gift to a Dear Child in Memory of a Summer's Day." +
-                " The published version of Alice's Adventures in Wonderland is about twice the length of " +
-                "Alice's Adventures Under Ground and includes episodes, such as the Mad Tea-Party, " +
-                "that did not appear in the manuscript. The only known manuscript copy of Under Ground " +
-                "is held in the British Library. Macmillan published a facsimile of the manuscript in 1886."
-  
-* İlgili texti bir String değişkenine atayınız
-* String içerisindeki ```.,!,?"``` karakterlerini temizleyiniz.
-* İstenen text içerisindeki unique kelime sayısını bulmanızdır.
-* Daha sonrasında bu unique kelimeleri alfabetik şekilde sıralanacak biçimde return ediniz.
-  
+Bu sınıf, çalışanların görev Set'lerini (Ann, Bob, Carol, Unassigned) yönetir ve set operasyonlarını uygular.
+
+| Metot | Açıklama |
+| :--- | :--- |
+| `getTasks(String assignee)` | "ann", "bob", "carol", "all" parametrelerine göre ilgili görev Set'ini döndürür. |
+| `getUnion(List<Set<Task>> sets)` | Bir listedeki tüm Set'lerin birleşim kümesini döndürür. |
+| `getIntersect(Set<Task> set1, Set<Task> set2)` | İki Set'in kesişim kümesini döndürür. |
+| `getDifference(Set<Task> set1, Set<Task> set2)` | İlk Set'ten ikinci Set'teki elemanları çıkararak fark kümesini döndürür. |
+
+### `org.example.entity.Task`
+
+Görevleri temsil eder. **Eşsizlik** kuralı sadece `project` ve `description` alanlarına göre belirlenmiştir.
+
+### `org.example.entity.Priority` ve `org.example.entity.Status`
+
+Görevler için kullanılan basit Enum tipleridir.
+
+### `org.example.entity.StringSet`
+
+Metin işleme challenge'ı için kullanılan static metotları içerir.
+
+| Metot | Açıklama |
+| :--- | :--- |
+| `findUniqueWords()` | Verilen metin bloğunu temizler, benzersiz kelimeleri bulur ve bunları **alfabetik olarak sıralanmış** bir Set olarak döndürür. |
+
+---
+
+## Sonuçlar ve Raporlama (Set Challenge)
+
+`TaskData` sınıfındaki temel Set operasyonları, müdürünüzün istediği raporlama ihtiyaçlarını karşılamak için kullanılmıştır:
+
+* **Tüm Çalışanların Görevleri:** `getUnion(List.of(annsTasks, bobsTasks, carolsTasks))` metodu ile elde edilir.
+* **Atanmamış Görevler:** `unassignedTasks` Set'i kullanılır.
+* **Çakışan Görevler:** `getIntersect()` metodu kullanılarak iki çalışan arasındaki kesişimler bulunur ve bunlar tekrar `getUnion()` ile birleştirilerek birden fazla çalışana atanmış görevler ortaya çıkarılır.
+
+---
+
+## String Challenge Sonucu
+
+`StringSet.findUniqueWords()` metodu, sağlanan uzun metin bloğu içindeki noktalama işaretlerini (`.`, `,`, `!`, `?`, `"`) temizledikten sonra, benzersiz kelimeleri bulur ve bir `TreeSet` (veya sıralı Set) kullanarak **alfabetik olarak sıralanmış** bir şekilde sunar.
